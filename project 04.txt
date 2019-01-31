@@ -1,0 +1,164 @@
+#include<bits/stdc++.h>
+using namespace std;
+class Person
+{
+public:
+    string name, dob;
+    void getdata(string name, string birthday)
+    {
+        this->name = name;
+        dob = birthday;
+    }
+    void putdata()
+    {
+        cout<<"Name : "<<name<<endl;
+        cout<<"Date of Birth : "<<dob<<endl;
+    }
+};
+class Department
+{
+    string dept_name;
+public:
+    Department(string name)
+    {
+        dept_name=name;
+    }
+    void show1();
+};
+void Department :: show1()
+{
+    cout<<"Department : "<<dept_name<<endl;
+}
+class ProblemSet : public Person  //create class
+{
+public:
+    string problem, solution;
+    ProblemSet() {}
+    ProblemSet(string problem, string solution)
+    {
+        this->problem = problem;
+        this->solution = solution;
+    }
+    void show()
+    {
+        cout<<"Problem : "<<problem<<endl;
+        cout<<"Solution : "<<solution<<endl;
+    }
+};
+class Student : public Person     //Inheritance
+{
+public:
+    string ID;
+    int solved = 0;
+    ProblemSet prblmst;
+    bool finalist = 0;
+    void setInfo(string j,string k, string l, int a, bool b )
+    {
+        getdata(j,k);
+        ID = l;
+        solved = a;
+        finalist = b;
+    }
+    void putInfo();
+    int getsolved()
+    {
+        return solved;
+    }
+    void setProblem(ProblemSet i)
+    {
+        prblmst = i;
+    }
+    bool ifFinal()
+    {
+        return finalist;
+    }
+    bool operator<(Student A)
+    {
+        return solved<A.solved;
+    }
+};
+ void Student :: putInfo()
+    {
+        putdata();
+        cout<<"Student Id : "<<ID<<endl;
+        cout<<"solved : "<<solved<<endl;
+        prblmst.show();
+    }
+int main()
+{
+    Department object("Computer Science & Engineering");  //create object
+    Student st[15];
+    st[0].setInfo("Sabbir","28-7-1996", "11708015", 300, 0);
+    st[1].setInfo("shimul","24-9-1996", "11708013", 150, 0);
+    st[2].setInfo("Shaful","4-3-1997", "11708041", 800, 1);
+    st[3].setInfo("Shourov","18-11-1997", "11708008", 500, 0);
+    st[4].setInfo("zahid","7-5-1996", "11708049", 350, 0);
+    st[0].setProblem(ProblemSet("Problem", "solution 1")) ;
+    st[1].setProblem(ProblemSet("Problem 17", "solution 17")) ;
+    st[1].setProblem(ProblemSet("Problem 12", "solution 12")) ;
+    st[2].setProblem(ProblemSet("Problem 5", "solution 5")) ;
+    st[2].setProblem(ProblemSet("Problem 11", "solution 11")) ;
+    st[3].setProblem(ProblemSet("Problem 3", "solution 3")) ;
+    st[4].setProblem(ProblemSet("Problem 8", "solution 8")) ;
+    st[4].setProblem(ProblemSet("Problem 15", "solution 15")) ;
+    int prbno[5] = {0}, n=0,cnt=0;
+    Student ob[2];
+    sort(st, st + 5);
+    for(int i = 0; i < 5 && n < 2; i++)
+    {
+        if(st[i].ifFinal()==1)
+        {
+            ob[n++] = st[i];
+        }
+    }
+    for(int i = 0; i < 5 && n < 2; i++)
+    {
+        if(st[i].ifFinal()==0)
+        {
+            ob[n++] = st[i];
+        }
+    }
+    cout<<endl;
+    object.show1();
+    cout<<".............."<<endl;
+    ob[0].putInfo();
+    cout<<endl;
+    ob[1].putInfo();
+    cout<<endl;
+    ob[3].putInfo();
+    cout<<endl;
+    ob[4].putInfo();
+    return 0;
+}
+
+/*
+Department : Computer Science & Engineering
+..............
+Name : Shaful
+Date of Birth : 4-3-1997
+Student Id : 11708041
+solved : 800
+Problem : Problem 11
+Solution : solution 11
+
+Name : shimul
+Date of Birth : 24-9-1996
+Student Id : 11708013
+solved : 150
+Problem : Problem 12
+Solution : solution 12
+
+Name : Sabbir
+Date of Birth : 28-7-1996
+Student Id : 11708015
+solved : 300
+Problem : Problem
+Solution : solution 1
+
+Name : zahid
+Date of Birth : 7-5-1996
+Student Id : 11708049
+solved : 350
+Problem : Problem 15
+Solution : solution 15
+*/
